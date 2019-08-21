@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import UserList from './components/UserList';
 import SearchForm from './components/SearchForm';

@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
-import {Button, Form, Input} from 'semantic-ui-react';
+import {Button, Form, Input, Menu} from 'semantic-ui-react';
 import styled from 'styled-components';
+
+const Divider = styled.div`
+    margin-left: 500px;
+    margin-top: 10px;
+`;
 
 const SearchForm = (props) => {
     const [user, setUser] = useState('');
@@ -15,21 +20,23 @@ const SearchForm = (props) => {
     }
 
     return (
-        <div className='search-navigation'>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group>
-                    <Form.Input
-                        control={Input}
-                        placeholder='User'
-                        label='User'
-                        value={user}
-                        onChange={handleChange}
-                        required
-                    />
-                    <Button>Search Users!</Button>
-                </Form.Group>  
-            </Form>
-        </div>
+        <Menu>
+            <Divider>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group>
+                        <Form.Input
+                            control={Input}
+                            placeholder='User'
+                            label='User'
+                            value={user}
+                            onChange={handleChange}
+                            required
+                        />
+                        <Button>Search Users!</Button>
+                    </Form.Group>  
+                </Form>
+            </Divider>
+        </Menu>
     )
 }
 
