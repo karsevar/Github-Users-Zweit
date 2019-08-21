@@ -14,8 +14,20 @@ class App extends Component {
       searchUser: 'tetondan'
     }
   }
-  
-  componentDidMount() {
+
+  addNewUser = (user) => {
+    this.addNewUserInfo(user)
+  }
+
+  addNewUserInfo = (user) => {
+    axios
+      .get(`https://api.github.com/users/${user}`)
+      .then(results => {
+        this.setState({userData: [...this.state.userData, results.data]})
+      })
+  }
+
+  findUsers = () => {
     axios
       .get(`https://api.github.com/users/${this.state.searchUser}`)
       .then(results => { 
@@ -30,9 +42,10 @@ class App extends Component {
             
             // Finds the usernames of all of the followers.
             const followersAuto = results.data.map(follower => follower.login)
+            console.log(followersAuto)
 
-            followersAuto.forEach(follower => {
-              axios.get(`https://api.github.com/users/${follower}`)
+            for (let i=0; i < 10; i++) {
+              axios.get(`https://api.github.com/users/${followersAuto[i]}`)
                 .then(result => {
                   // console.log('data from followers', result.data)
 
@@ -42,17 +55,21 @@ class App extends Component {
                 .catch(error => {
                   console.log('server error', error);
                 })
-            })
+              }
           })
       })
       .catch(err => console.log('did not work', err))
+  }
+  
+  componentDidMount() {
+    this.findUsers();
   }
   
   render() {
     // console.log('In render', this.state);
     return (
       <div className="App">
-        {/* <SearchForm /> */}
+        <SearchForm addNewUser={this.addNewUser} />
         <UserList userData={this.state.userData} />
       </div>
     );
